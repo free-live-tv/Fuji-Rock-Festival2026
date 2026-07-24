@@ -1,465 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html lang="bn">
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsversion='3' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commonwealth Games Live Stream HD</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Live HD Sports Streaming</title>
+    
+    <!-- ব্লগার স্কিন এরর ফিক্স -->
+    <b:skin><![CDATA[
+        /* Blogger Default Skin */
+    ]]></b:skin>
+
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
         body {
-            width: 100%;
-            min-height: 100vh;
-            background-color: #000000;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding-bottom: 30px;
-        }
-
-        .event-header {
-            width: 100%;
-            max-width: 420px;
-            padding: 20px 10px 5px 10px;
-            text-align: center;
-            background-color: #000000;
-        }
-        .event-header h1 {
-            font-size: 20px;
-            color: #ff3333;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .event-status {
-            display: inline-block;
-            background-color: #ff0000;
-            color: #fff;
-            padding: 2px 8px;
-            font-weight: bold;
-            font-size: 11px;
-            border-radius: 3px;
-            margin-bottom: 5px;
-        }
-
-        .top-unmute-notice {
-            width: 390px;
-            background-color: #1a1d29;
-            padding: 12px 15px;
-            border-left: 3px solid #ff3333;
-            border-radius: 4px;
-            font-size: 13px;
-            line-height: 1.4;
-            color: #cbd5e1;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-            text-align: left;
-        }
-        .timer-highlight {
-            color: #ffcc00;
-            font-weight: bold;
-        }
-
-        .player-container {
-            width: 390px;      
-            height: 335px;     
-            position: relative;
-            overflow: hidden;
-            border: none;      
-            background-color: #000000;
-            flex-shrink: 0;
-        }
-
-        .overlay-block {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 90;
-            background: transparent;
-        }
-
-        .player-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            pointer-events: auto;
-        }
-
-        .fake-loader-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpJZXsRTWGTrHdNATLv8e-hLBjiOIwyUa0nXk6kxTHKcmn_PM6qL9AA9vp&s=10');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 99;
-            animation: hideLoader 0.4s ease-in-out forwards;
-            animation-delay: 4s; 
-        }
-
-        .spinner {
-            width: 45px;
-            height: 45px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #ff3333;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        .loader-text {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #fff;
-            font-weight: bold;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.8);
-            letter-spacing: 0.5px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes hideLoader { to { opacity: 0; visibility: hidden; pointer-events: none; } }
-
-        .affiliate-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 11, 16, 0.96); 
-            z-index: 95;
-            display: none; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .offer-badge {
-            background-color: #00d2ff;
-            color: #000;
-            padding: 4px 10px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 20px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .offer-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.3;
-            margin-bottom: 10px;
-        }
-
-        .offer-desc {
-            font-size: 12.5px;
-            color: #a0a5b5;
-            line-height: 1.4;
-            margin-bottom: 20px;
-            max-width: 330px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(180deg, #00d2ff 0%, #0072ff 100%);
+            background-color: #0b0e14;
             color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: none;
-            padding: 13px 32px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0px 4px 20px rgba(0, 114, 255, 0.5);
-            transition: transform 0.2s ease;
-            animation: buttonShake 1.8s infinite ease-in-out;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         
-        .cta-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(180deg, #00e5ff 0%, #0088ff 100%);
-            box-shadow: 0px 6px 25px rgba(0, 114, 255, 0.7);
+        /* মেইন কন্টেইনার */
+        .stream-container {
+            width: 100%;
+            max-width: 800px;
+            background: #141a24;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid #222d3d;
+            transition: filter 0.3s ease;
+        }
+        
+        /* ব্যাকগ্রাউন্ড ব্লার করার ক্লাস */
+        .blur-active {
+            filter: blur(10px);
+            pointer-events: none;
         }
 
-        @keyframes buttonShake {
-            0% { transform: scale(1); }
-            10% { transform: scale(1.06) rotate(-2deg); }
-            15% { transform: scale(1.06) rotate(2deg); }
-            20% { transform: scale(1.06) rotate(-2deg); }
-            25% { transform: scale(1.06) rotate(2deg); }
-            30% { transform: scale(1) rotate(0deg); }
-            100% { transform: scale(1); }
+        /* ইভেন্ট হেডার */
+        .event-header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #1c2635 0%, #141a24 100%);
+            border-bottom: 1px solid #222d3d;
+        }
+        .event-header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .event-title {
+            color: #ff334b;
         }
 
-        .secure-footer {
-            font-size: 10.5px;
-            color: #575f75;
-            margin-top: 12px;
+        /* থাম্বনেইল ও প্লেয়ার এরিয়া */
+        .video-player-box {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+            background-image: url('https://i.imgur.com/8NV7uK8.png');
+            background-size: cover;
+            background-position: center;
         }
 
-        .comment-section {
-            width: 390px;
-            background-color: #161925; 
-            margin-top: 20px;
-            border-radius: 6px;
-            padding: 15px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+        /* লাইভ ব্লিংকিং লোগো */
+        .live-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 1px;
+            z-index: 5;
+            border: 1px solid rgba(255, 51, 75, 0.3);
         }
-        .comment-section h3 {
-            font-size: 14px;
-            color: #cbd5e1;
-            font-weight: 600;
-            border-bottom: 1px solid #2e344d;
-            padding-bottom: 12px;
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ff334b;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: blink 1s infinite;
+        }
+
+        /* ফেক অনলাইন ভিউয়ার কাউন্টার */
+        .viewer-count {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #2ecc71;
+            z-index: 5;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        /* সেন্ট্রাল প্লে বাটন */
+        .play-btn-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 4;
+            background: rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+        .play-btn-overlay:hover {
+            background: rgba(0,0,0,0.45);
+        }
+        .play-icon {
+            width: 85px;
+            height: 85px;
+            background: #ff334b;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(255, 51, 75, 0.7);
+            transition: transform 0.2s;
+        }
+        .play-btn-overlay:hover .play-icon {
+            transform: scale(1.1);
+        }
+        .play-icon svg {
+            width: 38px;
+            height: 38px;
+            fill: #fff;
+            margin-left: 6px;
+        }
+
+        /* কমেন্ট সেকশন */
+        .comments-section {
+            padding: 20px;
+            background: #141a24;
+        }
+        .comments-header {
+            font-size: 15px;
+            font-weight: 700;
+            color: #8e9aa8;
             margin-bottom: 15px;
+            border-bottom: 1px solid #222d3d;
+            padding-bottom: 8px;
         }
-        .comment-box {
+        .comment-item {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #1c2635;
+            padding-bottom: 12px;
         }
-        .comment {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+        .comment-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         .avatar-img {
-            width: 36px;
-            height: 36px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            object-fit: cover;
+            margin-right: 12px;
             flex-shrink: 0;
+            object-fit: cover;
+            border: 1px solid #222d3d;
         }
         .comment-details {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
+            flex-grow: 1;
         }
-        .username {
-            font-weight: 600;
+        .user-name {
             font-size: 13px;
-            color: #4f94d4; 
+            font-weight: 700;
+            color: #58a6ff;
+            margin-bottom: 3px;
         }
         .comment-text {
             font-size: 13px;
-            color: #e2e4e9;
+            color: #c9d1d9;
             line-height: 1.4;
         }
-        .comment-meta {
+        .comment-time {
             font-size: 11px;
-            color: #656c81;
-            margin-top: 3px;
-        }
-        .reply-link {
-            color: #656c81;
-            text-decoration: none;
-            margin-left: 2px;
+            color: #8e9aa8;
+            margin-top: 5px;
         }
 
-        @media (max-width: 410px) {
-            .player-container, .top-unmute-notice, .comment-section {
-                width: 95%;
-            }
+        /* 🔒 ২য় পেজ: স্মার্ট পপ-আপ বক্স */
+        .locker-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 10, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        .locker-box {
+            background: #1c2431;
+            max-width: 480px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 2px solid #2ecc71;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .locker-title {
+            font-size: 24px; 
+            font-weight: 800;
+            color: #ff334b;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .locker-desc {
+            font-size: 16px;
+            color: #f0f4f8;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        .badge-info {
+            font-size: 14px;
+            color: #e1e7ed;
+            background: #141a24;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2ecc71;
+            text-align: left;
+            line-height: 1.5;
+        }
+        
+        /* 🟢 গ্রাফিক্স ও গলোসহ সবুজ বাটন */
+        .verify-btn {
+            display: block;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 18px 25px;
+            font-size: 18px;
+            font-weight: 800;
+            border-radius: 35px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+            transition: all 0.2s ease;
+            border: 2px solid #ffffff;
+            animation: pulseGreen 1.5s infinite;
+        }
+        .verify-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.8);
+        }
+
+        /* অ্যানিমেশনসমূহ */
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes pulseGreen {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(46, 204, 113, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(46, 204, 113, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(46, 204, 113, 0.4); }
+        }
+
+        /* মোবাইল স্ক্রিন অ্যাডজাস্টমেন্ট */
+        @media (max-width: 600px) {
+            .event-header h1 { font-size: 18px; }
+            .play-icon { width: 70px; height: 70px; }
+            .play-icon svg { width: 28px; height: 28px; }
+            .locker-box { padding: 25px 20px; }
+            .locker-title { font-size: 20px; }
+            .locker-desc { font-size: 14px; }
+            .verify-btn { font-size: 16px; padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="event-header">
-        <span class="event-status">● LIVE</span>
-        <div class="header">
-          <center>
+    <div style='display:none;'>
+        <b:section id='main-sports-section' maxwidgets='1' showaddelement='no'/>
+    </div>
+
+    <!-- মেইন কন্টেন্ট এরিয়া -->
+    <div class="stream-container" id="mainContainer">
+        
+        <!-- ইভেন্ট হেডার -->
+        <div class="event-header">
+		<!-------Start-------->
+					<div class="header">
+					  <center>
 <script>
   atOptions = {
-    'key' : '61968ad00dac1138b98ac47a0eb36837',
+    'key' : '55604455f57049917c9c5bddc1d47abf',
     'format' : 'iframe',
     'height' : 50,
     'width' : 320,
     'params' : {}
   };
 </script>
-<script src="https://herbalraising.com/61968ad00dac1138b98ac47a0eb36837/invoke.js"></script>
-          </center>
-        </div>
-        <h1>Commonwealth Games Live Stream HD</h1>
-    </div>
+<script src="https://www.highperformanceformat.com/55604455f57049917c9c5bddc1d47abf/invoke.js"></script>
 
-    <div class="top-unmute-notice" id="notice-container">
-        📢 Stream is muted. Audio channels & Full Screen will automatically unlock in <span class="timer-highlight" id="countdown-timer">01:00</span> mins. Please wait for sync.
-    </div>
 
-    <div class="player-container">
-        <div class="overlay-block"></div>
 
-        <div class="fake-loader-screen">
-            <div class="spinner"></div>
-            <div class="loader-text">CONNECTING TO LIVE STREAM...</div>
-        </div>
 
-        <div class="affiliate-overlay" id="offer-overlay">
-            <span class="offer-badge">🔒 Stream Muted & Restricted</span>
-            <h2 class="offer-title">Watch Commonwealth Games Live Here - Create Free Account to Access Stream</h2>
-            <p class="offer-desc">Discover Unlimited - Movies, TV Shows, Audiobooks, Games, Books, Music & Sports</p>
-            
-            <a href="https://yhbcii.com/af?o=dc9cd0cfc3f238427cc31ded69ddc714:d953530fa2a25378f16822584e6d9a96&subid=naim" class="cta-button" target="_blank">Create My Free Account</a>
-            
-            <div class="secure-footer">🔒 Unlocks Audio & Full-Screen instantly • Takes 30s</div>
+
+
+					  </center>
+					</div>
+<!-------ends-------->
+            <h1><span class="event-title">🔴 【ライブ配信】 </span> Fuji Rock Festival 2026 『フジロックフェスティバル2026 ライブ』 フルショー ~ 2026年7月24日（金）</h1>
         </div>
         
-        <iframe src="https://player.kick.com/broadcasteventsonline" allowfullscreen="true" allow="autoplay; encrypted-media"></iframe>
-    </div>
-    
-    <div class="header">
-      <center>
+        <!-- থাম্বনেইল এবং প্লেয়ার এরিয়া -->
+        <div class="video-player-box">
+            <div class="live-badge">
+                <div class="dot"></div>LIVE
+            </div>
+            
+            <div class="viewer-count">
+                👁️ <span id="liveViewers">3,745</span> WATCHING
+            </div>
+            
+            <div class="play-btn-overlay" id="playButton">
+                <div class="play-icon">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+            </div>
+        </div>
+        <!-------Start-------->
+					<div class="header">
+					  <center>
 <script>
   atOptions = {
-    'key' : '03dc0db3ab5ace31d668d536ed4196af',
+    'key' : '561a48186be5d7b95e3a511d2086106a',
     'format' : 'iframe',
     'height' : 250,
     'width' : 300,
     'params' : {}
   };
 </script>
-<script src="https://herbalraising.com/03dc0db3ab5ace31d668d536ed4196af/invoke.js"></script>
-      </center>
-    </div>
+<script src="https://www.highperformanceformat.com/561a48186be5d7b95e3a511d2086106a/invoke.js"></script>
 
-    <div class="comment-section">
-        <h3>Live Discussion (1,245 comments)</h3>
-        <div class="comment-box">
-            <div class="comment">
-                <img class="avatar-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80" alt="Avatar">
+
+
+
+
+
+					  </center>
+					</div>
+<!-------ends-------->
+        <!-- কমেন্ট সেকশন -->
+        <div class="comments-section">
+            <div class="comments-header">Live Discussion (721 comments)</div>
+            
+            <!-- কমেন্ট ১ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&amp;w=100" alt="user"/>
                 <div class="comment-details">
-                    <span class="username">Jessica NYC</span>
-                    <p class="comment-text">Thought it was a scam at first, but the $0 verification actually unlocked the stream! Perfectly working in HD! 🔥</p>
-                    <div class="comment-meta">Just now • <span class="reply-link">Reply</span></div>
+                    <div class="user-name">Jessica_NYC</div>
+                    <div class="comment-text">Thought it was a scam at first, but the $0 verification actually unlocked the stream! Perfectly working in HD!🔥</div>
+                    <div class="comment-time">Just now • Reply</div>
+                </div>
+            </div>
+            
+            <!-- কমেন্ট ২ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&amp;w=100" alt="user"/>
+                <div class="comment-details">
+                    <div class="user-name">Mike_Rangers99</div>
+                    <div class="comment-text">Wow, took less than a minute to verify my email. Smooth streaming without any lag. Thanks for the link, bro!</div>
+                    <div class="comment-time">1 minute ago • Reply</div>
+                </div>
+            </div>
+            
+            <!-- কমেন্ট ৩ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&amp;w=100" alt="user"/>
+                <div class="comment-details">
+                    <div class="user-name">Sarah_M_Boston</div>
+                    <div class="comment-text">Is this totally free?? EDIT: Yes, it just asks for a basic human verification with zero charges. Sound quality is amazing! 📺</div>
+                    <div class="comment-time">3 minutes ago • Reply</div>
                 </div>
             </div>
 
-            <div class="comment">
-                <img class="avatar-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80" alt="Avatar">
+            <!-- কমেন্ট ৪ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&amp;w=100" alt="user"/>
                 <div class="comment-details">
-                    <span class="username">Mike Rangers</span>
-                    <p class="comment-text">Wow, took less than a minute to verify my email. Smooth streaming without any lag. Thanks for the link, bro!</p>
-                    <div class="comment-meta">1 minute ago • <span class="reply-link">Reply</span></div>
+                    <div class="user-name">David_C_USA</div>
+                    <div class="comment-text">Finally a working link! Spent 20 minutes on Twitter finding a good stream. This one is flawless in 4K. 👍</div>
+                    <div class="comment-time">4 minutes ago • Reply</div>
                 </div>
             </div>
 
-            <div class="comment">
-                <img class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80" alt="Avatar">
+            <!-- কমেন্ট ৫ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&amp;w=100" alt="user"/>
                 <div class="comment-details">
-                    <span class="username">Sarah Boston</span>
-                    <p class="comment-text">Is this totally free?? EDIT: Yes, it just asks for a basic human verification with zero charges. Sound quality is amazing! 📺</p>
-                    <div class="comment-meta">3 minutes ago • <span class="reply-link">Reply</span></div>
+                    <div class="user-name">Chloe_Gamer</div>
+                    <div class="comment-text">Verified using my secondary card and it instantly connected to the main feed. Zero complaints. 🥳</div>
+                    <div class="comment-time">6 minutes ago • Reply</div>
                 </div>
             </div>
 
-            <div class="comment">
-                <img class="avatar-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80" alt="Avatar">
+            <!-- কমেন্ট ৬ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&amp;w=100" alt="user"/>
                 <div class="comment-details">
-                    <span class="username">David USA</span>
-                    <p class="comment-text">Finally a working link! Spent 20 minutes on Twitter finding a good stream. This one is flawless in 4K. 👍</p>
-                    <div class="comment-meta">4 minutes ago • <span class="reply-link">Reply</span></div>
+                    <div class="user-name">Chris_Texan</div>
+                    <div class="comment-text">Amazing quality. Glad I verified, worth that 30 seconds of check. No more sketchy ads popping up.</div>
+                    <div class="comment-time">8 minutes ago • Reply</div>
                 </div>
             </div>
 
-            <div class="comment">
-                <img class="avatar-img" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80" alt="Avatar">
+            <!-- কমেন্ট ৭ -->
+            <div class="comment-item">
+                <img class="avatar-img" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&amp;w=100" alt="user"/>
                 <div class="comment-details">
-                    <span class="username">Chloe Gamer</span>
-                    <p class="comment-text">Verified using my secondary card and it instantly connected to the main feed. Zero complaints. 🥳</p>
-                    <div class="comment-meta">6 minutes ago • <span class="reply-link">Reply</span></div>
+                    <div class="user-name">Emily_Sweet</div>
+                    <div class="comment-text">My husband and I are watching together, fullscreen works perfectly on mobile too. Let's win this tonight! 🏆</div>
+                    <div class="comment-time">10 minutes ago • Reply</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const totalDuration = 60;
-        const timerElement = document.getElementById('countdown-timer');
-        const noticeContainer = document.getElementById('notice-container');
-        const offerOverlay = document.getElementById('offer-overlay');
+    <!-- 🔒 ২য় পেজ: পপ-আপ লকার বক্স -->
 
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                let date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "")  + expires + "; path=/; SameSite=Strict";
-        }
+    <div class="locker-overlay" id="lockerOverlay">
+        <div class="locker-box">
 
-        function getCookie(name) {
-            let nameEQ = name + "=";
-            let ca = document.cookie.split(';');
-            for(let i=0;i < ca.length;i++) {
-                let c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
+            <div class="locker-title">🔒ライブストリーム暗号化</div>
+            <div class="locker-desc">
+               放送権および著作権侵害防止規制のため、このプレミアムHDストリームはお住まいの地域では視聴できません。すぐにフルアクセスを有効にするには、以下の30秒の簡単な本人確認手続きを完了してください。
+            </div>
+            <div class="badge-info">
+                🛡️ <strong>Note:</strong> 認証は完全無料です。料金は一切かかりません。お客様が本物の人間であることを確認するため、一時的な0ドルの認証のみが必要となります。
+            </div>
+            <a href="https://yhbcii.com/af?o=49dafa95b7ca4eddd1900f85e2dd1378:c2fdf5f8b746d2a161adfe5abda44555&img=184&kw=185&subid=naim" class="verify-btn" target="_blank">タップして確認&amp;今すぐロック解除</a>
+        </div>
+    </div>
 
-        function lockPlayerAndShowOffer() {
-            noticeContainer.style.borderLeft = "3px solid #00d2ff";
-            noticeContainer.innerHTML = "⚠️ <b>Region Restricted:</b> Free streaming bandwidth for your country is currently limited. Verify your location with a free account to instantly unlock full-screen mode and HD audio!";
-            offerOverlay.style.display = "flex";
-        }
+    <!-- জাভাস্ক্রিপ্ট -->
+    <script type="text/javascript">
+        // প্লে বাটন ক্লিক
+        document.getElementById('playButton').addEventListener('click', function() {
+            document.getElementById('mainContainer').classList.add('blur-active');
+            document.getElementById('lockerOverlay').style.display = 'flex';
+        });
 
-        let isLocked = localStorage.getItem('stream_locked') || getCookie('stream_locked');
-        let startTime = localStorage.getItem('stream_start_time') || getCookie('stream_start_time');
-
-        if (isLocked === 'true') {
-            lockPlayerAndShowOffer();
-        } else {
-            if (!startTime) {
-                startTime = new Date().getTime();
-                localStorage.setItem('stream_start_time', startTime);
-                setCookie('stream_start_time', startTime, 1);
-            }
-
-            const countdown = setInterval(() => {
-                const now = new Date().getTime();
-                const elapsedTime = Math.floor((now - startTime) / 1000);
-                let remainingTime = totalDuration - elapsedTime;
-
-                if (remainingTime <= 0) {
-                    clearInterval(countdown);
-                    localStorage.setItem('stream_locked', 'true');
-                    setCookie('stream_locked', 'true', 1);
-                    lockPlayerAndShowOffer();
-                } else {
-                    let minutes = Math.floor(remainingTime / 60);
-                    let seconds = remainingTime % 60;
-                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                    seconds = seconds < 10 ? '0' + seconds : seconds;
-                    timerElement.textContent = `${minutes}:${seconds}`;
-                }
-            }, 1000);
-        }
+        // ভিউয়ার কাউন্টার আপডেট (৩,৫০০ - ৩,৯০০)
+        setInterval(function() {
+            var currentViewers = Math.floor(Math.random() * (3900 - 3500 + 1)) + 3500;
+            document.getElementById('liveViewers').innerText = currentViewers.toLocaleString();
+        }, 3000);
     </script>
+
 </body>
 </html>
-
 
 <!-- Histats.com  START  (aync)-->
 <script type="text/javascript">var _Hasync= _Hasync|| [];
@@ -471,5 +504,5 @@ var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async
 hs.src = ('//s10.histats.com/js15_as.js');
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
 })();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4672286&101" alt="hit counter" border="0"></a></noscript>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4672286&101" alt="site stats" border="0"></a></noscript>
 <!-- Histats.com  END  -->
